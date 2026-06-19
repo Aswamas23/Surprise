@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Shekinah 💖</title>
+    <!-- Google Fonts: Fredoka (rounded/cute) & Outfit (sleek/modern) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Ambient floating hearts in the background -->
+    <div class="bg-hearts-container" id="bg-hearts"></div>
+
+    <!-- Custom Toast Notification for Misclicks -->
+    <div class="toast-notification" id="toast-notif">
+        <div class="toast-content">
+            <span class="toast-icon">🌸</span>
+            <p id="toast-message">Oops! Maybe that was a misclick? Try again! 😉</p>
+        </div>
+    </div>
+
+    <!-- Background audio track -->
+    <audio id="bg-audio" src="Joeboy - Adenuga [Lyrics] Ft. Qind Madi - Realup Lyrics.mp3" loop preload="auto"></audio>
+
+    <!-- Main Outer Container -->
+    <main class="proposal-container">
+        
+        <!-- Step 1: Greeting/Intro -->
+        <section class="card active" id="step-intro">
+            <div class="card-glow"></div>
+            <div class="card-icon pulsing">🌸</div>
+            <h1 class="title">Hi Shekinah!</h1>
+            <p class="description">I made something special just for you. Click the button below when you're ready to see it.</p>
+            <button class="btn btn-primary" id="btn-start" onclick="playBubbleSound()">
+                Open Special Message 💖
+            </button>
+        </section>
+
+        <!-- Step 2: The Question -->
+        <section class="card" id="step-question">
+            <div class="card-glow"></div>
+            <div class="card-icon floating">✨</div>
+            <h1 class="title">Shekinah...</h1>
+            <h2 class="subtitle">Will you be my girlfriend? 💖</h2>
+            
+            <div class="btn-group" id="btn-group">
+                <button class="btn btn-yes" id="btn-yes">
+                    Yes! 🥰
+                </button>
+                <button class="btn btn-no" id="btn-no">
+                    No 😢
+                </button>
+            </div>
+        </section>
+
+        <!-- Step 3: Celebration/Yes Screen -->
+        <section class="card" id="step-celebration">
+            <div class="card-glow"></div>
+            <div class="celebration-badge">💖 YES! 💖</div>
+            <h1 class="title success-text">Happiest Person Alive! 🥰</h1>
+            <div class="heart-pulse-box">
+                <svg class="heart-svg" viewBox="0 0 32 32">
+                    <path d="M16,28.261c-0.27,0-0.53-0.106-0.728-0.297c-0.126-0.122-8.324-8.081-12.062-12.871C1.042,12.355,1,9.309,3.085,6.862 C4.992,4.624,8.196,4.032,10.74,5.433c2.086,1.148,3.948,3.582,5.26,5.556c1.312-1.974,3.174-4.408,5.26-5.556 c2.544-1.4,5.748-0.809,7.655,1.429c2.085,2.447,2.043,5.493-0.125,8.232c-3.738,4.79-11.936,12.749-12.062,12.871 C16.53,28.155,16.27,28.261,16,28.261z" fill="url(#heart-gradient)"/>
+                    <defs>
+                        <linearGradient id="heart-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff758c" />
+                            <stop offset="100%" stop-color="#ff7eb3" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <p class="description sweet-message">
+                Yay! You've made me the happiest person in the world, Shekinah! 🌹 I promise to make you smile, cherish our moments, and be there for you always. Here's to our beautiful journey together! ✨
+            </p>
+            <div class="decor-row">
+                <span>🍦 Ice cream dates</span>
+                <span>•</span>
+                <span>🌅 Sunsets</span>
+                <span>•</span>
+                <span>💫 Infinite smiles</span>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
