@@ -285,10 +285,34 @@ body {
     color: #ef4444;
 }
 
-/* Toast Notifications */
-.toast-notification {
-    position: fixed;
-    top: -100px;
+    .btn-no.sigh {
+        background: rgba(255, 245, 245, 0.95);
+        border-color: rgba(239, 68, 68, 0.22);
+        color: #b91c1c;
+        box-shadow: 0 10px 24px rgba(239, 68, 68, 0.18);
+        font-style: italic;
+    }
+
+    .btn-retry {
+        background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+        color: white;
+        box-shadow: 0 12px 30px rgba(236, 72, 153, 0.3);
+    }
+
+    .btn-retry:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 36px rgba(236, 72, 153, 0.35);
+    }
+
+    .card-icon.sad {
+        font-size: 96px;
+        margin-bottom: 18px;
+    }
+
+    .sad-text {
+        color: #b91c1c;
+        margin-bottom: 12px;
+    }
     left: 50%;
     transform: translateX(-50%);
     background: rgba(255, 255, 255, 0.85);

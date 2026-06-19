@@ -196,22 +196,68 @@ function setupEventListeners() {
     }
     
     // Escape behavior on hover / mouseover
+    const btnRetry = document.getElementById('btn-retry');
+    const stepSad = document.getElementById('step-sad');
+    let noEscapesCount = 0;
+    let noHasSighed = false;
+    let noButtonHidden = false;
+    const noDisappearThreshold = 4;
+
     if (btnNo) {
+        const restoreNoButtonPosition = () => {
+            const btnWidth = btnNo.offsetWidth;
+            const btnHeight = btnNo.offsetHeight;
+            const padding = 30;
+            const yesRect = btnYes.getBoundingClientRect();
+            const left = Math.min(window.innerWidth - btnWidth - padding, Math.max(padding, yesRect.left));
+            const top = Math.min(window.innerHeight - btnHeight - padding, Math.max(padding, yesRect.bottom + 12));
+
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = `${left}px`;
+            btnNo.style.top = `${top}px`;
+        };
+
+        const restoreNoButtonWithSigh = () => {
+            noButtonHidden = false;
+            noHasSighed = true;
+            noEscapesCount = 0;
+            btnNo.style.pointerEvents = 'auto';
+            btnNo.style.opacity = '1';
+            btnNo.style.transform = 'scale(1)';
+            btnNo.textContent = 'Sigh... No 😢';
+            btnNo.classList.add('sigh');
+            restoreNoButtonPosition();
+        };
+
+        const hideNoButtonForSigh = () => {
+            if (noButtonHidden || noHasSighed) return;
+            noButtonHidden = true;
+            btnNo.style.pointerEvents = 'none';
+            btnNo.style.transition = 'opacity 0.4s ease, transform 0.4s ease, left 0.4s ease, top 0.4s ease';
+            btnNo.style.opacity = '0';
+            btnNo.style.transform = 'scale(0.75) rotate(-18deg)';
+            btnNo.style.left = '-140px';
+            btnNo.style.top = '-140px';
+
+            setTimeout(() => {
+                restoreNoButtonWithSigh();
+            }, 700);
+        };
+
         const escapeButton = (e) => {
+            if (noButtonHidden) return;
             playPopSound();
-            
+
             // Calculate a random point on screen
             const btnWidth = btnNo.offsetWidth;
             const btnHeight = btnNo.offsetHeight;
-            
-            // Add padding so it doesn't end up glued to the edge
             const padding = 30;
             const maxX = window.innerWidth - btnWidth - padding;
             const maxY = window.innerHeight - btnHeight - padding;
-            
+
             let newX = Math.max(padding, Math.floor(Math.random() * maxX));
             let newY = Math.max(padding, Math.floor(Math.random() * maxY));
-            
+
             // If new position overlaps the "Yes" button area, re-calculate once
             const yesRect = btnYes.getBoundingClientRect();
             if (newX > yesRect.left - 50 && newX < yesRect.right + 50 &&
@@ -219,42 +265,62 @@ function setupEventListeners() {
                 newX = Math.max(padding, Math.floor(Math.random() * maxX));
                 newY = Math.max(padding, Math.floor(Math.random() * maxY));
             }
-            
+
             btnNo.style.position = 'fixed';
             btnNo.style.left = `${newX}px`;
             btnNo.style.top = `${newY}px`;
-            
+
             // Playfully grow the "Yes" button
             yesButtonScale += scaleStep;
             btnYes.style.transform = `scale(${yesButtonScale})`;
-            
+
             // Add extra drop shadow glow to the yes button as it grows
             const blurRadius = 25 + (yesButtonScale * 5);
             btnYes.style.boxShadow = `0 10px ${blurRadius}px rgba(79, 70, 229, ${0.35 + (yesButtonScale * 0.05)})`;
+
+            noEscapesCount += 1;
+            if (noEscapesCount >= noDisappearThreshold && !noHasSighed) {
+                hideNoButtonForSigh();
+            }
         };
-        
+
         btnNo.addEventListener('mouseover', escapeButton);
         btnNo.addEventListener('pointerenter', escapeButton);
         btnNo.addEventListener('touchstart', (e) => {
             e.preventDefault(); // Prevent default mobile double click or focus
             escapeButton();
         });
-        
-        // If they actually click the "No" button (e.g. keyboard navigation, or hyper fast click)
+
         btnNo.addEventListener('click', () => {
-            localStorage.setItem('girlfriend_misclick', 'true');
-            // Shake the screen/card, then refresh
-            document.body.style.animation = 'none';
-            setTimeout(() => {
-                document.body.style.animation = 'shake 0.5s';
-            }, 10);
-            
-            setTimeout(() => {
-                window.location.reload();
-            }, 500);
+            if (noButtonHidden) return;
+            stepQuestion.classList.remove('active');
+            stepSad.classList.add('active');
+            btnNo.style.pointerEvents = 'none';
+            btnYes.style.pointerEvents = 'none';
         });
     }
-    
+
+    if (btnRetry) {
+        btnRetry.addEventListener('click', () => {
+            stepSad.classList.remove('active');
+            stepQuestion.classList.add('active');
+            btnNo.textContent = 'No 😢';
+            btnNo.classList.remove('sigh');
+            btnNo.style.position = 'absolute';
+            btnNo.style.left = '';
+            btnNo.style.top = '';
+            btnNo.style.opacity = '1';
+            btnNo.style.pointerEvents = 'auto';
+            btnNo.style.transform = 'scale(1)';
+            yesButtonScale = 1.0;
+            btnYes.style.transform = 'scale(1)';
+            btnYes.style.boxShadow = '0 10px 25px rgba(79, 70, 229, 0.35)';
+            noEscapesCount = 0;
+            noHasSighed = false;
+            noButtonHidden = false;
+        });
+    }
+
     // Transition to Success Step 3
     if (btnYes) {
         btnYes.addEventListener('click', () => {
