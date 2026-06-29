@@ -332,6 +332,29 @@ function setupEventListeners() {
             startCelebrationRain();
         });
     }
+
+    // Navigation to Affirmations from Celebration screen
+    const btnToAffirmationsYes = document.getElementById('btn-to-affirmations-from-yes');
+    const stepAffirmations = document.getElementById('step-affirmations');
+    if (btnToAffirmationsYes) {
+        btnToAffirmationsYes.addEventListener('click', () => {
+            playBubbleSound();
+            stepCelebration.classList.remove('active');
+            stepAffirmations.classList.add('active');
+            displayAffirmation();
+        });
+    }
+
+    // Navigation to Affirmations from Sad screen
+    const btnToAffirmationsSad = document.getElementById('btn-to-affirmations-from-sad');
+    if (btnToAffirmationsSad) {
+        btnToAffirmationsSad.addEventListener('click', () => {
+            playBubbleSound();
+            stepSad.classList.remove('active');
+            stepAffirmations.classList.add('active');
+            displayAffirmation();
+        });
+    }
 }
 
 // Screen shaking animation inject
@@ -392,3 +415,35 @@ function spawnCelebrationEmoji(emojis) {
         emoji.remove();
     }, duration * 1000);
 }
+// Array of daily affirmations
+const affirmations = [
+    'I am capable and confident.',
+    'I am worthy of love and happiness.',
+    'I am strong and resilient.',
+    'I am grateful for all the blessings in my life.',
+    'You make my heart smile every day.',
+    'Together, we can achieve anything.',
+    'Every moment with you is special.',
+];
+
+// Function to display a random affirmation
+function displayAffirmation() {
+    const affirmationMessage = document.querySelector('.affirm-message');
+    if (!affirmationMessage) return;
+    const randomIndex = Math.floor(Math.random() * affirmations.length);
+    affirmationMessage.textContent = affirmations[randomIndex];
+}
+
+// Setup affirmations functionality after page loads
+window.addEventListener('DOMContentLoaded', () => {
+    // Display the first affirmation when page loads
+    displayAffirmation();
+
+    // Add an event listener to the Reload Affirmations button
+    const reloadAffirmationsButton = document.getElementById('btn-reload-affirmations');
+    if (reloadAffirmationsButton) {
+        reloadAffirmationsButton.addEventListener('click', () => {
+            displayAffirmation();
+        });
+    }
+}, { once: true });

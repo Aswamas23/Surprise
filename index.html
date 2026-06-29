@@ -82,6 +82,7 @@
                 <span>•</span>
                 <span>💫 Infinite smiles</span>
             </div>
+            <button class="btn btn-secondary" id="btn-to-affirmations-from-yes">View Daily Affirmations ✨</button>
         </section>
 
         <!-- Step 4: Sad/Retry Screen -->
@@ -90,7 +91,21 @@
             <div class="card-icon sad">😭</div>
             <h1 class="title sad-text">Aww... I tried.</h1>
             <p class="description">It’s okay. If you want, you can try again and maybe a different answer will find you.</p>
-            <button class="btn btn-retry" id="btn-retry">Retry 💫</button>
+            <div class="btn-group-sad">
+                <button class="btn btn-retry" id="btn-retry">Retry 💫</button>
+                <button class="btn btn-secondary" id="btn-to-affirmations-from-sad">Get Affirmations 🌟</button>
+            </div>
+        </section>
+
+        <!-- Step 5: Daily Affirmations -->
+        <section class="card" id="step-affirmations">
+            <div class="card-glow"></div>
+            <div class="card-icon affirm">🌟</div>
+            <h1 class="title affirm-text">Daily Affirmations</h1>
+            <p class="description affirm-message">
+                <!-- Your daily affirmations will be displayed here -->
+            </p>
+            <button class="btn btn-reload-affirmations" id="btn-reload-affirmations">Reload Affirmations</button>
         </section>
 
     </main>
